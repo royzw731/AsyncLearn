@@ -1,5 +1,4 @@
-﻿
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace ViewModels
 {
@@ -7,11 +6,19 @@ namespace ViewModels
     {
         public ICommand NavigateToAsyncDemoCommand { get; }
 
+        public ICommand NavigateToTasksCommand { get; }
 
         public WelcomeViewModel()
         {
             Title = "ברוכים הבאים";
-            NavigateToAsyncDemoCommand = new Command(async () => await Shell.Current.GoToAsync("//AsyncDemoPage"));
+
+            NavigateToAsyncDemoCommand =
+                new Command(async () =>
+                    await Shell.Current.GoToAsync("//AsyncDemoPage"));
+
+            NavigateToTasksCommand =
+                new Command(async () =>
+                    await Shell.Current.GoToAsync(nameof(Views.TasksPage)));
         }
     }
 }

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:ViewModels"
+    x:Class="Views.TasksPage"
+    x:DataType="vm:TasksViewModel"
+    FlowDirection="RightToLeft"
+    Title="{Binding Title}">
+
+    <Grid Padding="25"
+          RowDefinitions="Auto,Auto,*,Auto"
+          RowSpacing="20">
+
+        <!-- כותרת וכפתורים -->
+        <VerticalStackLayout Grid.Row="0"
+                             Spacing="15">
+
+            <Label Text="ניהול משימות אסינכרוניות"
+                   FontSize="30"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <HorizontalStackLayout
+                Spacing="15"
+                HorizontalOptions="Center">
+
+                <Button Text="Start Task"
+                        Command="{Binding StartTaskCommand}"
+                        BackgroundColor="#512BD4"
+                        TextColor="White"
+                        CornerRadius="12" />
+
+                <Button Text="נקה רשימה"
+                        Command="{Binding ClearAllCommand}"
+                        BackgroundColor="Gray"
+                        TextColor="White"
+                        CornerRadius="12" />
+
+            </HorizontalStackLayout>
+
+            <Label
+                Text="{Binding CompletedTasksCount,
+                       StringFormat='הושלמו: {0}'}"
+                FontSize="20"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+
+        <!-- כפתור ביטול כל המשימות -->
+        <Button Grid.Row="1"
+                Text="Cancel All"
+                Command="{Binding CancelAllCommand}"
+                BackgroundColor="#D9534F"
+                TextColor="White"
+                CornerRadius="10"
+                HorizontalOptions="Center" />
+
+        <!-- רשימת המשימות -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Tasks}"
+                        SelectionMode="None">
+
+            <CollectionView.EmptyView>
+                <Label Text="אין כרגע משימות להצגה"
+                       FontSize="18"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate x:DataType="vm:TaskItemViewModel">
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          RowDefinitions="Auto,Auto"
+                          Padding="0,12"
+                          ColumnSpacing="15">
+
+                        <!-- סטטוס המשימה -->
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Text="{Binding StatusText}"
+                               FontSize="18"
+                               VerticalOptions="Center" />
+
+                        <!-- ProgressBar -->
+                        <ProgressBar Grid.Row="1"
+                                     Grid.Column="0"
+                                     Progress="{Binding Progress}"
+                                     ProgressColor="Green"
+                                     VerticalOptions="Center"
+                                     HeightRequest="8" />
+
+                        <!-- כפתור ביטול -->
+                        <Button Grid.Row="1"
+                                Grid.Column="1"
+                                Text="Cancel"
+                                Command="{Binding CancelCommand}"
+                                IsEnabled="{Binding IsCancelEnabled}"
+                                BackgroundColor="LightGray"
+                                TextColor="Black"
+                                CornerRadius="10"
+                                WidthRequest="100" />
+
+                    </Grid>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+        <!-- חזרה לדף הבית -->
+        <Button Grid.Row="3"
+                Text="חזרה לדף הבית"
+                Command="{Binding GoHomeCommand}"
+                BackgroundColor="#512BD4"
+                TextColor="White"
+                CornerRadius="12"
+                HorizontalOptions="Center"
+                WidthRequest="200" />
+
+    </Grid>
+
+</ContentPage>

@@ -16,10 +16,10 @@
     </FlyoutItem>
 
     <FlyoutItem Title="Async Demo">
-            <ShellContent
+        <ShellContent
             Title="Async Demo"
             ContentTemplate="{DataTemplate views:AsyncDemoPage}"
             Route="AsyncDemoPage" />
-        </FlyoutItem>
+    </FlyoutItem>
 
 </Shell>
